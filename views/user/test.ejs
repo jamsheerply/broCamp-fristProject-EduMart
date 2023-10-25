@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <script>
+        function validateForm() {
+            // Get form inputs
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Define regular expressions for validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+            // Reset error messages
+            document.getElementById("firstNameError").textContent = "";
+            document.getElementById("lastNameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("confirmPasswordError").textContent = "";
+
+            let valid = true;
+
+            // Validate first name
+            if (!firstName) {
+                document.getElementById("firstNameError").textContent = "First Name is required.";
+                valid = false;
+            }
+
+            // Validate last name
+            if (!lastName) {
+                document.getElementById("lastNameError").textContent = "Last Name is required.";
+                valid = false;
+            }
+
+            // Validate email
+            if (!email) {
+                document.getElementById("emailError").textContent = "Email is required.";
+                valid = false;
+            } else if (!emailRegex.test(email)) {
+                document.getElementById("emailError").textContent = "Invalid email format.";
+                valid = false;
+            }
+
+            // Validate password
+            if (!password) {
+                document.getElementById("passwordError").textContent = "Password is required.";
+                valid = false;
+            } else if (!strongPasswordRegex.test(password)) {
+                document.getElementById("passwordError").textContent = "Password must be at least 8 characters long and include letters and digits.";
+                valid = false;
+            }
+
+            // Validate password confirmation
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+                valid = false;
+            }
+
+            return valid;
+        }
+        function postData(event){
+            event.preventDefault()
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            if(validateForm()){
+
+                let formData={
+                    firstname:firstName,
+                    lastaname:lastName,
+                    email:email,
+                    password:password,
+                }
+                fetch('/user/registration',{
+                    method:"POST",
+                    headers:{"Content-type":"application/json"},
+                    body:JSON.stringify(formData)
+                }).then((response)=>response.json()).then((res)=>{
+                    if(res.status){
+                        location.href='/user/home'
+                    }
+                    if(res.err){
+                        document.getElementById("exist").textContent=res.err
+
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="postData(event)">
+        <p id="exist" style="color: red;"></p>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName">
+        <p id="firstNameError" style="color: red;"></p>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName">
+        <p id="lastNameError" style="color: red;"></p>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email">
+        <p id="emailError" style="color: red;"></p>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password">
+        <p id="passwordError" style="color: red;"></p>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword">
+        <p id="confirmPasswordError" style="color: red;"></p>
+
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>

@@ -1,18 +1,24 @@
-//.................express......................................
 const express = require("express");
+const mongoose = require("mongoose");
+
+try {
+    mongoose.connect("mongodb://127.0.0.1:27017/EduMart");
+    console.log("Connected to MongoDB");
+} catch (error) {
+    console.error("Mongoose connection error:", error);
+}
 const app = express();
-app.listen(8000, () => {
-    console.log("Server is running at http://127.0.0.1:8000");
+
+
+
+// ..........set port, listen for requests........
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server is running on port  http://127.0.0.1:${PORT}`);
 });
 
-// ................view engine...................................
-app.set('view engine', 'ejs')
 
-// ....................static file...............................
-app.use(express.static("public"));
+//for user routes
+const userRoute=require("./routers/userRouter")
+app.use("/user",userRoute)
 
-
-app.get("/",(req,res)=>{
-    res.render('user/singleProduct')
-    // res.send("hello")
-})

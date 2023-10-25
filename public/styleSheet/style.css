@@ -1,11 +1,4 @@
 /*-----------------------------------------------------------------------------------
-		Template Name: limupa - Digital Products Store ECommerce Bootstrap 4 Template
-		Template URI: http://bootexperts.com
-		Description: This is digital products store html5 template for eCommerce websites, nice and clean design;
-		Author: HasTech
-		Author URI: 
-		Version: 1.0
------------------------------------------------------------------------------------
 		CSS INDEX
 		===================
 		01. Default Style
@@ -3059,8 +3052,8 @@ text-align: center;
 	font-family: fontawesome;
 }
 .category-heading > h2 > i {
-	float: ;
-	text-align: ;
+	/* float: ;
+	text-align: ; */
 	float: right;
 	padding-right: 20px;
 	font-size: 12px;
