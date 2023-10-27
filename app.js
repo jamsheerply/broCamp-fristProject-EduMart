@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 try {
     mongoose.connect("mongodb://127.0.0.1:27017/EduMart");
@@ -9,6 +11,14 @@ try {
 }
 const app = express();
 
+// Initialization
+app.use(cookieParser());
+ 
+app.use(session({
+    secret: "amar",
+    saveUninitialized: true,
+    resave: true
+}));
 
 
 // ..........set port, listen for requests........

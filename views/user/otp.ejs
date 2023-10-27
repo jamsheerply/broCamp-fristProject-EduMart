@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP Verification Form</title>
+  <link rel="stylesheet" href="styleSheet/otp.css">
+  <!-- Boxicons CSS -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+    <!-- <div class="toast">
+      <div class="toast-content">
+        <i class="fas fa-solid fa-check check"></i>
+        <div class="message">
+          <span class="text text-1">
+          </span>
+          <span class="text text-2"> Please try again</span>
+        </div>
+      </div>
+      <i class="fa-solid fa-xmark close"></i>
+      <div class="progress"></div>
+    </div> -->
+      <div class="container">
+        <header>
+          <i class="bx bxs-check-shield"></i>
+        </header>
+        <h4>Enter OTP Code</h4>
+        <form action="/user/otp" method="POST">
+          <div class="input-field">
+            <input type="number" name="digitOne" />
+            <input type="number" name="digitTwo" disabled />
+            <input type="number" name="digitThree" disabled />
+            <input type="number" name="digitFour" disabled />
+          </div>
+          <button>Verify OTP</button>
+        </form>
+      </div>
+
+      <script src="javaScript/otp.js"></script>
+      <!-- <script>
+        const toast = document.querySelector(".toast");
+        const closeIcon = document.querySelector(".close");
+        const progress = document.querySelector(".progress");
+        let timer1, timer2;
+
+        // Function to show the toast
+        function showToast(message) {
+          toast.classList.add("active");
+          progress.classList.add("active");
+
+          timer1 = setTimeout(() => {
+            toast.classList.remove("active");
+          }, 5000); // 1s = 1000 milliseconds
+
+          timer2 = setTimeout(() => {
+            progress.classList.remove("active");
+          }, 5300);
+
+          // Update the message text
+          document.querySelector(".text-2").textContent = message;
+        }
+
+        // Function to hide the toast
+        function hideToast() {
+          toast.classList.remove("active");
+
+          setTimeout(() => {
+            progress.classList.remove("active");
+          }, 300);
+
+          clearTimeout(timer1);
+          clearTimeout(timer2);
+        }
+
+        // Example usage
+        // Show the toast with a custom message
+        showToast("Please try again");
+
+        // Hide the toast after a certain time (e.g., 3 seconds)
+        setTimeout(() => {
+          hideToast();
+          toast.classList.add('disableView')
+        }, 5500); // Hide after 3 seconds
+
+      </script> -->
+</body>
+
+</html>

@@ -67,8 +67,8 @@ function postData(event){
     if(validateForm()){
 
         let formData={
-            firstname:firstName.value,
-            lastaname:lastName.value,
+            firstName:firstName.value,
+            lastName:lastName.value,
             email:email.value,
             password:password.value,
         }
@@ -78,7 +78,7 @@ function postData(event){
             body:JSON.stringify(formData)
         }).then((response)=>response.json()).then((res)=>{
             if(res.status){
-                location.href='/user/home'
+                location.href='/user/otp'
             }
             if(res.err){
                 document.getElementById("emailError").textContent=res.err
