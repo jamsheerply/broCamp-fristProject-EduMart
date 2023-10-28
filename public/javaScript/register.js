@@ -8,7 +8,8 @@ function validateForm() {
 
     // Define regular expressions for validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!])([A-Za-z\d@#$%^&+=!]){8,}$/;
+
 
     // Reset error messages
     document.getElementById("firstNameError").textContent = "";

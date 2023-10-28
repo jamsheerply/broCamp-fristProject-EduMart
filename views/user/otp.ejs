@@ -32,6 +32,11 @@
           <i class="bx bxs-check-shield"></i>
         </header>
         <h4>Enter OTP Code</h4>
+        <% if(typeof message !=="undefined" ){%>
+          <div class="alert alert-danger text-center">
+              <%= message %>
+          </div>
+          <%}%>
         <form action="/user/otp" method="POST">
           <div class="input-field">
             <input type="number" name="digitOne" />

@@ -1,6 +1,7 @@
 const userModel = require("../model/userModel");
 const otpVerification = require("../model/otpVerification")
-const jwt=require("jsonwebtoken")
+const adminModel = require("../model/adminModel")
+const jwt = require("jsonwebtoken")
 require('dotenv').config();
 
 
@@ -54,6 +55,15 @@ const sendVerifyMail = async (name, email) => {
     }
 }
 
+//............loadLanding..........................
+const loadLanding = async (req, res) => {
+    // if (req.session.id && req.session.role == "user") {
+    //     res.render("user/home")
+    // } else {
+        res.render("user/test")
+    // }
+}
+
 // ...............loadRegister......................
 const loadRegister = async (req, res) => {
     try {
@@ -67,7 +77,6 @@ const loadRegister = async (req, res) => {
 const insertUser = async (req, res) => {
     try {
         const spassword = await securePassword(req.body.password);
-        console.log(req.body.lastName + "console")
         const userData = new userModel({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -76,9 +85,6 @@ const insertUser = async (req, res) => {
         });
 
         if (userData) {
-            console.log(userData);
-
-
             // Use req.body.email here instead of undefined 'email'
             let exist = await userModel.findOne({ email: req.body.email });
 
@@ -87,7 +93,6 @@ const insertUser = async (req, res) => {
             } else {
                 sendVerifyMail(req.body.firstName, req.body.email)
                 req.session.userData = userData
-                // await userData.save();
                 return res.json({ status: true });
             }
             console.log(userData);
@@ -108,7 +113,7 @@ const loadOtp = async (req, res) => {
     }
 }
 
-// ...............verifyOtp...................
+// ...............verifyOtp............................
 const verifyOtp = async (req, res) => {
     try {
         const digitOne = req.body.digitOne;
@@ -123,34 +128,94 @@ const verifyOtp = async (req, res) => {
         console.log(otp + " stored");
         if (strOtp == otp) {
             const userData = req.session.userData;
-            console.log(userData);
-
-            // Now, save the user data to the database
-            const saveData = new userModel(userData);  // Create an instance of the userModel
-
-            await saveData.save(); // Save the user data to the database
-            console.log(saveData._id)
-
-            res.render("/user/home");
-            const token=jwt.sign({id:saveData._id},process.env.SECRET_STR,{
-                expiresIn:process.env.LOGIN_EXPIRES
-            })
+            const saveData = new userModel(userData);
+            await saveData.save();
+            res.redirect("/user/home");
         } else {
-            console.log("otp error");
+            res.render("user/otp", { message: "invalid otp" })
         }
     } catch (error) {
         console.log(error.message);
     }
 }
 
-// .......................loadHome............................
+// .......................loadHome....................
 const loadHome = async (req, res) => {
-    res.render("user/landing")
+    try {
+
+        res.render("user/home")
+    } catch (error) {
+        console.log(error.message + "loadHome")
+    }
 }
+
+//.......................loadLogin...................
+const loadLogin = async (req, res) => {
+    try {
+        res.render("user/login")
+    } catch (error) {
+        console.log(error.message + "loadLogin")
+    }
+}
+
+//.................verifyLogin......................
+const verifyLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const userData = await userModel.findOne({ email: email })
+        if (userData) {
+            const passwordCompare = await bcrypt.compare(password, userData.password)
+            if (passwordCompare) {
+                req.session.id = userData._id
+                req.session.role = userData.role
+                res.redirect("/user/home")
+            } else {
+                res.render("user/login", { message: "Email and password is incorrect" })
+            }
+        } else {
+            res.render("user/login", { message: "User not found" })
+        }
+    } catch (error) {
+        console.log(error.message + " verifyLogin")
+    }
+}
+
+//................adminInsert.......................
+const adminInsert = async (req, res) => {
+    try {
+        const adminData = new adminModel({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+        })
+        adminData.save()
+        if (adminData) {
+            res.send("inserted")
+        }
+    } catch (error) {
+        console.log(error.message + " adiminInsert")
+    }
+}
+
+//..............logOut.......................
+const userLogout = async (req, res) => {
+    try {
+        req.session.destroy();
+        res.redirect("/");
+    } catch (error) {
+        console.log(error.message+" userLogout")
+    }
+}
+
 module.exports = {
+    loadLanding,
     loadRegister,
     insertUser,
     loadOtp,
     verifyOtp,
-    loadHome
+    loadHome,
+    loadLogin,
+    verifyLogin,
+    adminInsert,
+    userLogout
 };

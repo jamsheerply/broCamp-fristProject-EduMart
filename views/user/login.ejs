@@ -5,7 +5,7 @@
 <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Login Register || limupa - Digital Products Store eCommerce Bootstrap 4 Template</title>
+        <title>Login</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
@@ -170,17 +170,22 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
                             <!-- Login Form s-->
-                            <form action="#" >
+                            <form action="/user/login" method="post">
                                 <div class="login-form">
                                     <h4 class="login-title">Login</h4>
+                                    <% if(typeof message !=="undefined" ){%>
+                                        <div class="alert alert-danger text-center">
+                                            <%= message %>
+                                        </div>
+                                        <%}%>
                                     <div class="row">
                                         <div class="col-md-12 col-12 mb-20">
                                             <label>Email Address*</label>
-                                            <input class="mb-0" type="email" placeholder="Email Address">
+                                            <input class="mb-0" type="email" placeholder="Email Address" name="email">
                                         </div>
                                         <div class="col-12 mb-20">
                                             <label>Password</label>
-                                            <input class="mb-0" type="password" placeholder="Password">
+                                            <input class="mb-0" type="password" placeholder="Password" name="password">
                                         </div>
                                         <div class="col-md-8">
                                             <div class="check-box d-inline-block ml-0 ml-md-2 mt-10">
@@ -193,7 +198,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <button class="register-button mt-0">Login</button><br><br><br>
-                                            <span>not a member?<a href="register.html"> Register now</a></span>
+                                            <span>not a member?<a href="/user/register"> Register now</a></span>
                                         </div>
                                         
                                     </div>
@@ -286,15 +291,15 @@
                                     <ul class="des">
                                         <li>
                                             <span>Address: </span>
-                                            6688Princess Road, London, Greater London BAS 23JK, UK
+                                            Payyoli,Kozhikode,Kerala,673522,INDIA
                                         </li>
                                         <li>
                                             <span>Phone: </span>
-                                            <a href="#">(+123) 123 321 345</a>
+                                            <a href="#">+91 9020-432-432</a>
                                         </li>
                                         <li>
                                             <span>Email: </span>
-                                            <a href="mailto://info@yourdomain.com">info@yourdomain.com</a>
+                                            <a href="#">jamsheerpayyoli@gmail.com</a>
                                         </li>
                                     </ul>
                                 </div>
