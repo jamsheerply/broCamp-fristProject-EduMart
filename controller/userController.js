@@ -57,11 +57,11 @@ const sendVerifyMail = async (name, email) => {
 
 //............loadLanding..........................
 const loadLanding = async (req, res) => {
-    // if (req.session.id && req.session.role == "user") {
-    //     res.render("user/home")
-    // } else {
-        res.render("user/test")
-    // }
+    if (req.session.id && req.session.role == "user") {
+        res.redirect("/user/home")
+    } else {
+        res.redirect("user/landing")
+    }
 }
 
 // ...............loadRegister......................
@@ -142,7 +142,7 @@ const verifyOtp = async (req, res) => {
 // .......................loadHome....................
 const loadHome = async (req, res) => {
     try {
-
+        res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         res.render("user/home")
     } catch (error) {
         console.log(error.message + "loadHome")
@@ -152,6 +152,7 @@ const loadHome = async (req, res) => {
 //.......................loadLogin...................
 const loadLogin = async (req, res) => {
     try {
+        res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         res.render("user/login")
     } catch (error) {
         console.log(error.message + "loadLogin")
@@ -161,6 +162,7 @@ const loadLogin = async (req, res) => {
 //.................verifyLogin......................
 const verifyLogin = async (req, res) => {
     try {
+        res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         const { email, password } = req.body
         const userData = await userModel.findOne({ email: email })
         if (userData) {
@@ -203,7 +205,7 @@ const userLogout = async (req, res) => {
         req.session.destroy();
         res.redirect("/");
     } catch (error) {
-        console.log(error.message+" userLogout")
+        console.log(error.message + " userLogout")
     }
 }
 
